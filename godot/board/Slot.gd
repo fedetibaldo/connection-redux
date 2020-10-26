@@ -1,15 +1,23 @@
 extends Position2D
 
-var tile_scene = preload("res://tiles/TileView.tscn")
+class_name Slot
 
-func initialize(board: Board):
+signal tile_selected(tile, coord);
+
+var tile_scene = preload("res://tiles/TileView.tscn")
+var slot_coord: Vector2
+
+func initialize(coord: Vector2):
+	slot_coord = coord
 	for child in get_children():
 		if child is Tile:
-			var tile = add_tile(child as Tile)
-			tile.connect("tile_selected", board, "_on_tile_selected")
+			add_tile(child as Tile)
 
-func add_tile(tile: Tile) -> TileView:
+func add_tile(tile: Tile):
 	var tile_view = tile_scene.instance()
 	add_child(tile_view)
 	tile_view.initialize(tile)
-	return tile_view
+	tile_view.connect("tile_selected", self, "_on_tile_selected")
+
+func _on_tile_selected(tile):
+	emit_signal("tile_selected", tile, slot_coord)
