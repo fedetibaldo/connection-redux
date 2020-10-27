@@ -3,7 +3,6 @@ extends Node2D
 class_name Board
 
 onready var connection = $Connection
-onready var fade_tween = $ConnectionFade
 var tiles_selected = []
 var coords_selected = []
 
@@ -42,9 +41,6 @@ func _on_tile_selected(tile: TileView, coord: Vector2):
 		tile.highlight()
 		tiles_selected.push_back(tile)
 		coords_selected.push_back(coord)
-		# connection logic
-		fade_tween.stop(connection, "modulate")
-		connection.modulate = Color.white
 		connection.add_point(
 			# Ugly code ahead
 			coord * 21 + Vector2(17/2, 17/2) + Vector2(3/2, 0),
@@ -55,19 +51,11 @@ func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
 		if event.button_index == BUTTON_LEFT and not event.pressed:
-			# tiles and coords logic
 			for tile in tiles_selected:
 				tile = tile as TileView
 				tile.undo_highlight()
 			tiles_selected = []
 			coords_selected = []
-			# connection logic
-			fade_tween.interpolate_property(
-				connection, "modulate",
-				Color.white, Color.transparent, 0.2
-			)
-			fade_tween.start()
-			yield(fade_tween, "tween_completed")
 			connection.points = PoolVector2Array()
 
 func _process(_delta):

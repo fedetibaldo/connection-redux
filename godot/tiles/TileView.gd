@@ -19,19 +19,8 @@ func initialize(tile: Tile):
 func highlight():
 	# Stop any previous animation
 	tween.stop(self, "set_highlight_amount")
-	# Modulate the duration based on the current state
-	var start = get_highlight_amount()
-	var stop = Vector3.ONE
-	var max_duration = .2
-	var distance = start.normalized().distance_to(stop.normalized())
-	var duration = max_duration * distance
-	# Animate
-	tween.interpolate_method(
-		self, "set_highlight_amount",
-		start, stop, duration,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
-	)
-	tween.start()
+	# Immediatly set it to its maximum value (enchances player feedback)
+	set_highlight_amount(Vector3.ONE)
 
 func undo_highlight():
 	# Stop any previous animation

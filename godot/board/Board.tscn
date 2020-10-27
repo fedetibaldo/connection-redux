@@ -6,10 +6,8 @@
 [node name="Board" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="ConnectionFade" type="Tween" parent="."]
-
 [node name="Connection" type="Line2D" parent="."]
-width = 3.0
+width = 5.0
 default_color = Color( 1, 1, 0, 1 )
 
 [node name="Slot 1 1" type="Position2D" parent="."]
