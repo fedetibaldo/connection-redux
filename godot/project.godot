@@ -14,50 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/board/Board.gd"
 }, {
-"base": "Tile",
-"class": "Circle",
-"language": "GDScript",
-"path": "res://src/tiles/Circle.gd"
-}, {
-"base": "Tile",
-"class": "Ex",
-"language": "GDScript",
-"path": "res://src/tiles/Ex.gd"
-}, {
-"base": "Position2D",
-"class": "Slot",
-"language": "GDScript",
-"path": "res://src/board/Slot.gd"
-}, {
-"base": "Tile",
-"class": "Square",
-"language": "GDScript",
-"path": "res://src/tiles/Square.gd"
-}, {
-"base": "Node",
+"base": "Node2D",
 "class": "Tile",
 "language": "GDScript",
-"path": "res://src/tiles/Tile.gd"
+"path": "res://src/board/Tile.gd"
 }, {
-"base": "Node2D",
-"class": "TileView",
+"base": "Resource",
+"class": "TileData",
 "language": "GDScript",
-"path": "res://src/tiles/TileView.gd"
-}, {
-"base": "Tile",
-"class": "Triangle",
-"language": "GDScript",
-"path": "res://src/tiles/Triangle.gd"
+"path": "res://src/board/tiles/TileData.gd"
 } ]
 _global_script_class_icons={
 "Board": "",
-"Circle": "",
-"Ex": "",
-"Slot": "",
-"Square": "",
 "Tile": "",
-"TileView": "",
-"Triangle": ""
+"TileData": ""
 }
 
 [application]
@@ -65,10 +35,6 @@ _global_script_class_icons={
 config/name="Connection: Redux"
 run/main_scene="res://src/Game.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-Global="*res://src/Global.gd"
 
 [display]
 
