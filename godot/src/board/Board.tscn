@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/board/Board.gd" type="Script" id=2]
 
-[node name="Board" type="Node2D"]
+[node name="Board" type="Position2D"]
 script = ExtResource( 2 )
 
 [node name="Connection" type="Line2D" parent="."]

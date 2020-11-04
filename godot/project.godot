@@ -38,11 +38,12 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=96
-window/size/height=144
+window/size/width=768
+window/size/height=1152
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+window/stretch/shrink=8.0
 
 [rendering]
 
