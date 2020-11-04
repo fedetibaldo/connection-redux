@@ -4,7 +4,7 @@ class_name Slot
 
 signal tile_selected(tile, coord);
 
-var tile_scene = preload("res://tiles/TileView.tscn")
+var tile_scene = preload("res://src/tiles/TileView.tscn")
 var slot_coord: Vector2
 
 func initialize(coord: Vector2):
