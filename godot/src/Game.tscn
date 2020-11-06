@@ -1,14 +1,18 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/board/Board.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/board/tiles/Circle.tres" type="Resource" id=2]
+[ext_resource path="res://src/tiles/Circle.tres" type="Resource" id=2]
 [ext_resource path="res://src/Game.gd" type="Script" id=3]
-[ext_resource path="res://src/board/tiles/Ex.tres" type="Resource" id=4]
-[ext_resource path="res://src/board/tiles/Triangle.tres" type="Resource" id=5]
-[ext_resource path="res://src/board/tiles/Square.tres" type="Resource" id=6]
+[ext_resource path="res://src/tiles/Ex.tres" type="Resource" id=4]
+[ext_resource path="res://src/tiles/Triangle.tres" type="Resource" id=5]
+[ext_resource path="res://src/tiles/Square.tres" type="Resource" id=6]
+[ext_resource path="res://src/display/Display.tscn" type="PackedScene" id=7]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
+starting_combination = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 4 ) ]
+
+[node name="Display" parent="." instance=ExtResource( 7 )]
 
 [node name="Board" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8, 64 )

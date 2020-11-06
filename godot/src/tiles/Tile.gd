@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 class_name Tile
 
@@ -22,7 +22,7 @@ func _ready():
 func initialize(_tile: TileData, _coord: Vector2):
 	coord = _coord
 	tile = _tile
-	position = _coord * margin_box
+	#position = _coord * margin_box
 	sprite.texture = tile.sprite
 
 func highlight():

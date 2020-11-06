@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Board
 
-var tile_scene = preload("res://src/board/Tile.tscn")
+var tile_scene = preload("res://src/tiles/Tile.tscn")
 
 export(Array, Array, Resource) var tiles = [
 	[null, null, null, null],
@@ -11,6 +11,13 @@ export(Array, Array, Resource) var tiles = [
 ]
 
 onready var connection := $Connection
+onready var container := $Container
+onready var columns := [
+	$"Container/Column 1",
+	$"Container/Column 2",
+	$"Container/Column 3",
+	$"Container/Column 4"
+]
 
 var tiles_selected = []
 
@@ -20,17 +27,11 @@ func initialize():
 		var col = 0
 		for tile in tile_row:
 			var scene = tile_scene.instance()
-			add_child(scene)
+			columns[col].add_child(scene)
 			scene.initialize(tile, Vector2(col, row))
 			scene.connect("tile_selected", self, "_on_tile_selected")
 			col += 1
 		row += 1
-
-func _index_to_coord(index: int) -> Vector2:
-	return Vector2(index % 4, floor(index / 4))
-
-func _coord_to_index(coord: Vector2) -> int:
-	return int(coord.y * 4 + coord.x)
 
 func _is_legal_move(new_coord: Vector2) -> bool:
 	if tiles_selected.size():
@@ -41,13 +42,19 @@ func _is_legal_move(new_coord: Vector2) -> bool:
 			return false
 	return true
 
+func _get_tile_position(tile: Tile):
+	var offset = Vector2(tile.rect_size.x * tile.coord.x, tile.rect_size.y * tile.coord.y)
+	offset.x += container.get_constant('separation') * tile.coord.x
+	offset.y += columns[tile.coord.x].get_constant('separation') * tile.coord.y
+	return offset
+
 func _on_tile_selected(tile: Tile):
 	if _is_legal_move(tile.coord):
 		# tiles and coords logic
 		tile.highlight()
 		tiles_selected.push_back(tile)
 		connection.add_point(
-			tile.position + Vector2(tile.size, tile.size) / 2,
+			_get_tile_position(tile) + tile.rect_size / 2,
 			connection.points.size() - 1
 		)
 

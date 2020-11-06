@@ -14,15 +14,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/board/Board.gd"
 }, {
-"base": "Node2D",
+"base": "Control",
 "class": "Tile",
 "language": "GDScript",
-"path": "res://src/board/Tile.gd"
+"path": "res://src/tiles/Tile.gd"
 }, {
 "base": "Resource",
 "class": "TileData",
 "language": "GDScript",
-"path": "res://src/board/tiles/TileData.gd"
+"path": "res://src/tiles/TileData.gd"
 } ]
 _global_script_class_icons={
 "Board": "",
