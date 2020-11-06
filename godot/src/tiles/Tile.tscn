@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://src/board/Tile.gd" type="Script" id=1]
+[ext_resource path="res://src/tiles/Tile.gd" type="Script" id=1]
 [ext_resource path="res://assets/tiles/frame.png" type="Texture" id=2]
 [ext_resource path="res://assets/tiles/background.png" type="Texture" id=3]
-[ext_resource path="res://src/board/TileHighlight.tres" type="Shader" id=4]
+[ext_resource path="res://src/tiles/TileHighlight.tres" type="Shader" id=4]
 [ext_resource path="res://assets/tiles/ex.png" type="Texture" id=5]
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -13,9 +13,16 @@ shader_param/highlight_amount = null
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8.5, 8.5 )
 
-[node name="Tile" type="Node2D"]
+[node name="Tile" type="Control"]
 material = SubResource( 1 )
+margin_right = 17.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 17, 17 )
+mouse_filter = 2
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Background Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
