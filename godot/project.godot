@@ -15,9 +15,9 @@ _global_script_classes=[ {
 "path": "res://src/board/Board.gd"
 }, {
 "base": "Control",
-"class": "Tile",
+"class": "BoardTile",
 "language": "GDScript",
-"path": "res://src/tiles/Tile.gd"
+"path": "res://src/board/BoardTile.gd"
 }, {
 "base": "Resource",
 "class": "TileData",
@@ -26,7 +26,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Board": "",
-"Tile": "",
+"BoardTile": "",
 "TileData": ""
 }
 

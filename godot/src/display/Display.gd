@@ -1,6 +1,6 @@
 extends Position2D
 
-var tile_scene = preload("res://src/tiles/Tile.tscn")
+export(PackedScene) var tile_scene
 
 var current_combination = []
 

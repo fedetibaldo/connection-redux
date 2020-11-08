@@ -1,6 +1,6 @@
 extends Control
 
-class_name Tile
+class_name BoardTile
 
 onready var sprite = $"Tile Sprite"
 onready var collision_area = $CollisionArea
@@ -10,9 +10,6 @@ signal tile_selected(tile);
 
 var tile: TileData
 var coord: Vector2
-var size := 17
-var margin := 4
-var margin_box := size + margin
 
 func _ready():
 	collision_area.connect("mouse_entered", self, "_on_collision_area_mouse_enter")
@@ -22,7 +19,6 @@ func _ready():
 func initialize(_tile: TileData, _coord: Vector2):
 	coord = _coord
 	tile = _tile
-	#position = _coord * margin_box
 	sprite.texture = tile.sprite
 
 func highlight():

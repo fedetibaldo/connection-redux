@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Board
 
-var tile_scene = preload("res://src/tiles/Tile.tscn")
+export(PackedScene) var tile_scene
 
 export(Array, Array, Resource) var tiles = [
 	[null, null, null, null],
@@ -26,12 +26,15 @@ func initialize():
 	for tile_row in tiles:
 		var col = 0
 		for tile in tile_row:
-			var scene = tile_scene.instance()
-			columns[col].add_child(scene)
-			scene.initialize(tile, Vector2(col, row))
-			scene.connect("tile_selected", self, "_on_tile_selected")
+			_add_tile(tile, Vector2(col, row))
 			col += 1
 		row += 1
+
+func _add_tile(tile: TileData, coord: Vector2):
+	var scene = tile_scene.instance()
+	columns[coord.x].add_child(scene)
+	scene.initialize(tile, coord)
+	scene.connect("tile_selected", self, "_on_tile_selected")
 
 func _is_legal_move(new_coord: Vector2) -> bool:
 	if tiles_selected.size():
@@ -42,13 +45,13 @@ func _is_legal_move(new_coord: Vector2) -> bool:
 			return false
 	return true
 
-func _get_tile_position(tile: Tile):
-	var offset = Vector2(tile.rect_size.x * tile.coord.x, tile.rect_size.y * tile.coord.y)
+func _get_tile_position(tile: BoardTile):
+	var offset = tile.rect_size * tile.coord
 	offset.x += container.get_constant('separation') * tile.coord.x
 	offset.y += columns[tile.coord.x].get_constant('separation') * tile.coord.y
 	return offset
 
-func _on_tile_selected(tile: Tile):
+func _on_tile_selected(tile: BoardTile):
 	if _is_legal_move(tile.coord):
 		# tiles and coords logic
 		tile.highlight()
@@ -63,7 +66,7 @@ func _unhandled_input(event: InputEvent):
 		event = event as InputEventMouseButton
 		if event.button_index == BUTTON_LEFT and not event.pressed:
 			for tile in tiles_selected:
-				tile = tile as Tile
+				tile = tile as BoardTile
 				tile.undo_highlight()
 			tiles_selected = []
 			connection.points = PoolVector2Array()
