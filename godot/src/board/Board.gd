@@ -5,71 +5,63 @@ class_name Board
 export(PackedScene) var tile_scene
 
 export(Array, Array, Resource) var tiles = [
-	[null, null, null, null],
-	[null, null, null, null],
-	[null, null, null, null],
+	[null, null, null],
+	[null, null, null],
+	[null, null, null],
+	[null, null, null],
 ]
 
 onready var connection := $Connection
-onready var container := $Container
-onready var columns := [
-	$"Container/Column 1",
-	$"Container/Column 2",
-	$"Container/Column 3",
-	$"Container/Column 4"
-]
+onready var matrix := $Matrix
 
+func _ready():
+	matrix.connect("tile_selected", self, "_on_tile_selected")
+
+var coords_selected = []
 var tiles_selected = []
 
 func initialize():
-	var row = 0
-	for tile_row in tiles:
-		var col = 0
-		for tile in tile_row:
-			_add_tile(tile, Vector2(col, row))
-			col += 1
-		row += 1
-
-func _add_tile(tile: TileData, coord: Vector2):
-	var scene = tile_scene.instance()
-	columns[coord.x].add_child(scene)
-	scene.initialize(tile, coord)
-	scene.connect("tile_selected", self, "_on_tile_selected")
+	var col = 0
+	for column in tiles:
+		for tile in column:
+			matrix.add_tile(tile, col)
+		col += 1
 
 func _is_legal_move(new_coord: Vector2) -> bool:
-	if tiles_selected.size():
-		for tile in tiles_selected:
-			if new_coord == tile.coord:
+	if coords_selected.size():
+		for coord in coords_selected:
+			if new_coord == coord:
 				return false
-		if new_coord.distance_to(tiles_selected.back().coord) > 1:
+		if new_coord.distance_to(coords_selected.back()) > 1:
 			return false
 	return true
 
 func _get_tile_position(tile: BoardTile):
 	var offset = tile.rect_size * tile.coord
-	offset.x += container.get_constant('separation') * tile.coord.x
-	offset.y += columns[tile.coord.x].get_constant('separation') * tile.coord.y
+	offset.x += matrix.get_constant('separation') * tile.coord.x
+	offset.y += matrix.get_constant('separation') * tile.coord.y
 	return offset
 
-func _on_tile_selected(tile: BoardTile):
-	if _is_legal_move(tile.coord):
+func _on_tile_selected(_matrix, tile: TileData, coord: Vector2):
+	if _is_legal_move(coord):
 		# tiles and coords logic
-		tile.highlight()
+		coords_selected.push_back(coord)
 		tiles_selected.push_back(tile)
-		connection.add_point(
-			_get_tile_position(tile) + tile.rect_size / 2,
-			connection.points.size() - 1
-		)
+		# highlight new coordinate
+		matrix.highlight(coord)
+		#connection.add_point(
+		#	_get_tile_position(tile) + tile.rect_size / 2,
+		#	connection.points.size() - 1
+		#)
 
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
 		if event.button_index == BUTTON_LEFT and not event.pressed:
-			for tile in tiles_selected:
-				tile = tile as BoardTile
-				tile.undo_highlight()
-			tiles_selected = []
-			connection.points = PoolVector2Array()
+			for coord in coords_selected:
+				matrix.remove(coord)
+			coords_selected = []
+			# connection.points = PoolVector2Array()
 
 func _process(_delta):
 	if connection.points.size() and Input.is_mouse_button_pressed(BUTTON_LEFT):

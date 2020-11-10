@@ -16,4 +16,4 @@ starting_combination = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ), E
 
 [node name="Board" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8, 64 )
-tiles = [ [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ], [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ) ], [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ) ] ]
+tiles = [ [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 6 ) ], [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ], [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ) ], [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 5 ) ] ]

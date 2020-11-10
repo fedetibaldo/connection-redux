@@ -6,18 +6,16 @@ onready var sprite = $"Tile Sprite"
 onready var collision_area = $CollisionArea
 onready var tween = $Tween
 
-signal tile_selected(tile);
+signal tile_selected(this, tile, coord);
 
 var tile: TileData
-var coord: Vector2
 
 func _ready():
 	collision_area.connect("mouse_entered", self, "_on_collision_area_mouse_enter")
 	collision_area.connect("input_event", self, "_on_collision_area_input_event")
 	material = material.duplicate()
 
-func initialize(_tile: TileData, _coord: Vector2):
-	coord = _coord
+func initialize(_tile: TileData):
 	tile = _tile
 	sprite.texture = tile.sprite
 
@@ -40,11 +38,11 @@ func _on_collision_area_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
 		if event.button_index == BUTTON_LEFT and event.pressed:
-			emit_signal("tile_selected", self)
+			emit_signal("tile_selected", self, tile, Vector2.ZERO)
 
 func _on_collision_area_mouse_enter():
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-		emit_signal("tile_selected", self)
+		emit_signal("tile_selected", self, tile, Vector2.ZERO)
 
 func _get_highlight_amount() -> Vector3:
 	return material.get_shader_param("highlight_amount")

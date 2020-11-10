@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/board/BoardTile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/board/Board.gd" type="Script" id=2]
 [ext_resource path="res://src/board/Column.gd" type="Script" id=3]
+[ext_resource path="res://src/board/Matrix.gd" type="Script" id=4]
 
 [node name="Board" type="Position2D"]
 script = ExtResource( 2 )
@@ -12,52 +13,54 @@ tile_scene = ExtResource( 1 )
 width = 5.0
 default_color = Color( 1, 1, 0, 1 )
 
-[node name="Container" type="HBoxContainer" parent="."]
+[node name="Matrix" type="HBoxContainer" parent="."]
 margin_right = 12.0
 mouse_filter = 2
 custom_constants/separation = 4
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Column 1" type="VBoxContainer" parent="Container"]
+[node name="Column 1" type="Container" parent="Matrix"]
+margin_right = 17.0
+rect_min_size = Vector2( 17, 0 )
 mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 4
+size_flags_horizontal = 2
+size_flags_vertical = 8
 script = ExtResource( 3 )
 tile_scene = ExtResource( 1 )
 tween = NodePath("../../Tween")
 
-[node name="Column 2" type="VBoxContainer" parent="Container"]
-margin_left = 4.0
-margin_right = 4.0
+[node name="Column 2" type="Container" parent="Matrix"]
+margin_left = 21.0
+margin_right = 38.0
+rect_min_size = Vector2( 17, 0 )
 mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 4
+size_flags_horizontal = 2
+size_flags_vertical = 8
 script = ExtResource( 3 )
 tile_scene = ExtResource( 1 )
 tween = NodePath("../../Tween")
 
-[node name="Column 3" type="VBoxContainer" parent="Container"]
-margin_left = 8.0
-margin_right = 8.0
+[node name="Column 3" type="Container" parent="Matrix"]
+margin_left = 42.0
+margin_right = 59.0
+rect_min_size = Vector2( 17, 0 )
 mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 4
+size_flags_horizontal = 2
+size_flags_vertical = 8
 script = ExtResource( 3 )
 tile_scene = ExtResource( 1 )
 tween = NodePath("../../Tween")
 
-[node name="Column 4" type="VBoxContainer" parent="Container"]
-margin_left = 12.0
-margin_right = 12.0
+[node name="Column 4" type="Container" parent="Matrix"]
+margin_left = 63.0
+margin_right = 80.0
+rect_min_size = Vector2( 17, 0 )
 mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 4
+size_flags_horizontal = 2
+size_flags_vertical = 8
 script = ExtResource( 3 )
 tile_scene = ExtResource( 1 )
 tween = NodePath("../../Tween")

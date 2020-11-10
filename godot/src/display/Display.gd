@@ -14,7 +14,7 @@ func _instance_tiles(combination):
 	for tile in combination:
 		var scene = tile_scene.instance()
 		container.add_child(scene)
-		scene.initialize(tile, Vector2(index, 0))
+		scene.initialize(tile)
 		index += 1
 	if current_combination:
 		# instance above and fade old tiles out
