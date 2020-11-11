@@ -37,6 +37,7 @@ func add_tile(tile: TileData):
 	tile_node.initialize(tile)
 	tile_node.connect("tile_selected", self, "_on_tile_selected")
 	new_tiles += 1
+	tile_node.modulate = Color.transparent
 	tile_node.rect_position = -(tile_node.rect_size * new_tiles * Vector2.DOWN + 4 * new_tiles * Vector2.DOWN)
 
 func _notification(what):
@@ -79,19 +80,33 @@ func _resort_children():
 			# NOTE: assumes the vertical size flag is set to "Shrink End"
 			var prev_pos = (child.rect_position - layout_shift) * Vector2.DOWN
 			
+			# Duration is relative to the distance from the final position
+			var duration = 0.2 + 0.1 * ((offset - prev_pos) / child.rect_size).y
+			
+			# The initial delay is based upon how many tiles there are below the current one
+			# The greater the number of tiles, the greater the delay. Creates a wave effect
+			var real_idx = idx - new_tiles
+			var position_in_line = 0
+			while (
+				real_idx + position_in_line + 1 < removed_tiles.size() + new_tiles and
+				not _normalize_index(real_idx + position_in_line + 1) in removed_tiles
+			):
+				position_in_line += 1
+			var delay = (1 + position_in_line) * 0.05
+			
 			# Animate from previous position to new offset
-			(tween as Tween).interpolate_property(
+			tween.interpolate_property(
 				child, 'rect_position',
-				prev_pos, offset, 1,
-				Tween.TRANS_LINEAR, Tween.EASE_OUT, 0
+				prev_pos, offset, duration,
+				Tween.TRANS_LINEAR, Tween.EASE_OUT, delay
 			)
 			
 			# Fade in if new
 			if idx < new_tiles:
-				(tween as Tween).interpolate_property(
+				tween.interpolate_property(
 					child, 'modulate',
-					Color.transparent, Color.white, 1,
-					Tween.TRANS_LINEAR, Tween.EASE_OUT, 0
+					Color.transparent, Color.white, duration,
+					Tween.TRANS_LINEAR, Tween.EASE_OUT, delay
 				)
 			idx += 1
 			
